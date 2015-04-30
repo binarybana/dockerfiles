@@ -1,6 +1,6 @@
 FROM fedora:21
-MAINTAINER jknight@humanlongevity.com
-RUN yum -y update && yum install -y \
+MAINTAINER Jason Knight
+RUN yum -y update; yum install -y \
   git \
   curl \
   vim-enhanced \
@@ -20,7 +20,10 @@ RUN yum -y update && yum install -y \
   blosc-devel \
   lz4 \
   lz4-devel \
-  Cython
+  Cython \
+  freetype-devel \
+  libpng-devel \
+  dnf || true
 RUN pip install \
   pandas \
   ipython \
@@ -30,10 +33,19 @@ RUN pip install \
   flake8 \
   python-snappy \
   blosc \
-  lz4
+  lz4 \
+  tornado \
+  jinja2 \
+  jsonschema \
+  matplotlib \
+  bokeh
+RUN dnf install -y dnf-plugins-core && dnf copr enable -y nalimilan/julia-nightlies && dnf install -y julia
+RUN julia -e '[Pkg.add(x) for x in split("DataFrames Distributions Gadfly Bokeh HDF5 MsgPack")]'
 RUN git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick && \
   printf '\nsource $HOME/.homesick/repos/homeshick/homeshick.sh\n' >> $HOME/.bashrc
 RUN source $HOME/.bashrc && \
-  homeshick clone -q https://github.com/binarybana/dotfiles.git && \
-  homeshick link dotfiles && \
-  vim -E +PluginInstall +qall > /dev/null; true
+  homeshick clone -qqq https://github.com/binarybana/dotfiles.git && \
+  homeshick link dotfiles
+RUN chsh --shell /bin/zsh
+RUN vim -u ~/.vundlerc +PluginInstall +qall
+
