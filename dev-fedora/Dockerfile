@@ -38,6 +38,7 @@ RUN pip install \
   jinja2 \
   jsonschema \
   matplotlib \
+  awscli \
   bokeh
 RUN dnf install -y dnf-plugins-core && dnf copr enable -y nalimilan/julia-nightlies && dnf install -y julia
 RUN julia -e '[Pkg.add(x) for x in split("DataFrames Distributions Gadfly Bokeh HDF5 MsgPack")]'
