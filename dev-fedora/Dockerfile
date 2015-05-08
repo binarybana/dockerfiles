@@ -23,6 +23,10 @@ RUN yum -y update; yum install -y \
   Cython \
   freetype-devel \
   libpng-devel \
+  jq \
+  htop \
+  tar \
+  wget \
   dnf || true
 RUN pip install \
   pandas \
@@ -47,6 +51,6 @@ RUN git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homes
 RUN source $HOME/.bashrc && \
   homeshick clone -qqq https://github.com/binarybana/dotfiles.git && \
   homeshick link dotfiles
-RUN chsh --shell /bin/zsh
+RUN chsh --shell /bin/zsh && echo 'alias sudo=""' >> ~/.zshrc
 RUN vim -u ~/.vundlerc +PluginInstall +qall
 
