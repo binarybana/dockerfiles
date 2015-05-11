@@ -52,5 +52,4 @@ RUN source $HOME/.bashrc && \
   homeshick clone -qqq https://github.com/binarybana/dotfiles.git && \
   homeshick link dotfiles
 RUN chsh --shell /bin/zsh && echo 'alias sudo=""' >> ~/.zshrc
-RUN vim -u ~/.vundlerc +PluginInstall +qall
 
