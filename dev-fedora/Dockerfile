@@ -58,3 +58,4 @@ RUN source $HOME/.bashrc && \
   homeshick link dotfiles
 RUN chsh --shell /bin/zsh && echo 'alias sudo=""' >> ~/.zshrc
 
+CMD ["/bin/zsh"]
