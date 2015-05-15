@@ -27,6 +27,11 @@ RUN yum -y update; yum install -y \
   htop \
   tar \
   wget \
+  make \
+  m4 \
+  gmp-devel \
+  patch \
+  bzip2 \
   dnf || true
 RUN pip install \
   pandas \
