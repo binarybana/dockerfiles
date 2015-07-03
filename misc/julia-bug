@@ -1,0 +1,10 @@
+FROM fedora:21
+RUN yum -y update
+RUN yum -y install dnf
+RUN /usr/bin/dnf install -y dnf-plugins-core && /usr/bin/dnf copr enable -y nalimilan/julia-nightlies && /usr/bin/dnf install -y julia
+RUN dnf install -y nettle gnutls
+RUN julia -e '[Pkg.add(x) for x in split("Requests")]'
+WORKDIR /root/.julia/v0.4/Requests
+RUN git checkout art/httpparser-32
+ENTRYPOINT ["/usr/bin/julia"]
+CMD ["-e","using Requests; get(\"http://httpbin.org/get\")"]
